@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  
+  
+  
+  <entry>
+    <title>3D 打印相关记录</title>
+    <link href="/DailyBlog/2024/12/15/hello-world/"/>
+    <url>/DailyBlog/2024/12/15/hello-world/</url>
+    
+    <content type="html"><![CDATA[<h2 id="材料相关"><a href="#材料相关" class="headerlink" title="材料相关"></a>材料相关</h2><h3 id="PLA高精度打印"><a href="#PLA高精度打印" class="headerlink" title="PLA高精度打印"></a>PLA高精度打印</h3><p>在<a href="https://www.bilibili.com/video/BV17C411E7Hp">如何用FDM打印高质量手板模型</a>这个视频中，给出了PLA材料的高质量打印参数。</p><p>高细物体在龙门架结构的打印机中表现不佳。给出的打印参数如下：</p><ul><li><p>喷嘴温度：首层220°C，室温25°C下可设置为203°C</p></li><li><p>参数覆盖：</p><ul><li>回抽长度：1.6mm</li><li>回抽时抬升Z轴：0.4mm</li><li>Z轴抬升方式：螺旋</li><li>回抽速度：50mm&#x2F;s</li></ul></li><li><p>层高选项：0.12mm Fine@BBL A1</p></li></ul><p>如果要高精度+快速，可以开启可变层高功能：</p><ul><li><p>打印机设置：</p><ul><li>挤出机：层高限制设为<code>[0.08,0.12]</code> mm。</li><li>选中一个部件，选择切片软件上方可变层高菜单，选择自适应</li></ul></li><li><p>质量：</p><ul><li>接缝位置：背面，摆盘时把看不见的面摆到背面</li><li>高级：顶面单层 墙不使用</li></ul></li><li><p>强度：</p><ul><li>墙层数：3层</li><li>稀疏填充图案：螺旋体</li><li>稀疏填充密度：15%</li></ul></li><li><p>速度：</p><ul><li>加速度：外墙：1000mm&#x2F;s^2</li></ul></li><li><p>支撑：</p><ul><li>开启支撑，树状自动</li><li>顶部Z距离：0.07mm</li><li>主体图案线距：1.2mm</li><li>顶部接触面层数：5层</li><li>支撑面图案：交叠的直线</li><li>顶部接触面线距：0.4mm</li><li>支撑独立层高：不勾选</li></ul></li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>摸鱼娱乐</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  
+</search>
