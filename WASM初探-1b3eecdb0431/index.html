@@ -1,0 +1,674 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#0D1716">
+  <meta name="author" content="Cybersh1t">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="什么是WebAssembly WebAssembly（简称WASM）是一种可以在网页浏览器中运行的二进制指令格式。它由WebAssembly社区组（W3C的WebAssembly工作组）开发，旨在提供一种高效、安全且跨平台的计算方式，以支持现代Web应用的需求。 WASM的工作原理 二进制格式：WASM是一种二进制格式，而不是像JavaScript那样的高级脚本语言。这种二进制格式使得编译器可以将">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WebAssembly初探">
+<meta property="og:url" content="https://blog.cybercolyce.cn/WASM%E5%88%9D%E6%8E%A2-1b3eecdb0431/index.html">
+<meta property="og:site_name" content="Laked22">
+<meta property="og:description" content="什么是WebAssembly WebAssembly（简称WASM）是一种可以在网页浏览器中运行的二进制指令格式。它由WebAssembly社区组（W3C的WebAssembly工作组）开发，旨在提供一种高效、安全且跨平台的计算方式，以支持现代Web应用的需求。 WASM的工作原理 二进制格式：WASM是一种二进制格式，而不是像JavaScript那样的高级脚本语言。这种二进制格式使得编译器可以将">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2025/02/09/dBEP5SpYFostwi9.png">
+<meta property="og:image" content="https://s2.loli.net/2025/02/09/3mNHxr4uqiTLlAC.png">
+<meta property="og:image" content="https://s2.loli.net/2025/02/22/qd5zKLb8TQXxyPo.png">
+<meta property="article:published_time" content="2025-07-14T13:00:12.214Z">
+<meta property="article:modified_time" content="2025-06-27T13:38:39.946Z">
+<meta property="article:author" content="Cybersh1t">
+<meta property="article:tag" content="WebAssembly">
+<meta property="article:tag" content="Rust">
+<meta property="article:tag" content="Vue">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://s2.loli.net/2025/02/09/dBEP5SpYFostwi9.png">
+  
+  
+  
+  <title>WebAssembly初探 - Laked22</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.cybercolyce.cn","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":true,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Laked22</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/imgs/background.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">WebAssembly初探</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-07-14 21:00" pubdate>
+          2025年7月14日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          16 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">WebAssembly初探</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="什么是WebAssembly"><a href="#什么是WebAssembly" class="headerlink" title="什么是WebAssembly"></a>什么是WebAssembly</h2><p> WebAssembly（简称WASM）是一种可以在网页浏览器中运行的二进制指令格式。它由WebAssembly社区组（W3C的WebAssembly工作组）开发，旨在提供一种高效、安全且跨平台的计算方式，以支持现代Web应用的需求。</p>
+<h3 id="WASM的工作原理"><a href="#WASM的工作原理" class="headerlink" title="WASM的工作原理"></a>WASM的工作原理</h3><ol>
+<li><p><strong>二进制格式</strong>：WASM是一种二进制格式，而不是像JavaScript那样的高级脚本语言。这种二进制格式使得编译器可以将高级语言（如C、C++、Rust等）编译成高效的机器代码，从而提高执行速度。</p>
+</li>
+<li><p><strong>模块化</strong>：WASM模块是独立的、可重用的代码单元，可以包含函数、数据、表和内存等。这些模块可以通过WebAssembly的链接器进行组合，形成更复杂的程序。</p>
+</li>
+<li><p><strong>沙箱环境</strong>：WASM运行在一个沙箱环境中，这意味着它只能访问特定的资源和功能，从而提高安全性。例如，WASM模块不能直接访问用户的文件系统或摄像头。</p>
+</li>
+<li><p><strong>跨平台</strong>：WASM可以运行在任何支持WASM的平台上，包括浏览器、服务器和移动设备。这使得开发者可以使用一种语言编写代码，然后在不同的平台上运行。</p>
+</li>
+</ol>
+<h3 id="WASM的特点"><a href="#WASM的特点" class="headerlink" title="WASM的特点"></a>WASM的特点</h3><p>WebAssembly具有以下几个显著的特点：</p>
+<ol>
+<li><p><strong>高性能</strong>：WASM是二进制格式，这意味着它比传统的脚本语言（如JavaScript）更高效。编译器可以将高级语言代码编译成高效的机器代码，从而提高执行速度。</p>
+</li>
+<li><p><strong>安全</strong>：WASM运行在一个沙箱环境中，这意味着它只能访问特定的资源和功能。这种沙箱环境可以防止WASM模块执行恶意代码，从而提高安全性。</p>
+</li>
+<li><p><strong>跨平台</strong>：WASM可以运行在任何支持WASM的平台上，包括浏览器、服务器和移动设备。这使得开发者可以使用一种语言编写代码，然后在不同的平台上运行。</p>
+</li>
+<li><p><strong>模块化</strong>：WASM模块是独立的、可重用的代码单元，可以包含函数、数据、表和内存等。这些模块可以通过WebAssembly的链接器进行组合，形成更复杂的程序。</p>
+</li>
+<li><p><strong>低延迟</strong>：由于WASM是二进制格式，因此它可以减少网络传输的开销，从而提高应用的响应速度。</p>
+</li>
+<li><p><strong>丰富的生态系统</strong>：WASM有一个活跃的社区和丰富的生态系统，包括编译器、工具链、库和框架等。这使得开发者可以轻松地使用WASM进行开发。</p>
+</li>
+<li><p><strong>兼容性</strong>：WASM可以与现有的Web技术（如HTML、CSS和JavaScript）无缝集成，从而使得开发者可以使用WASM来扩展和优化现有的Web应用。</p>
+</li>
+</ol>
+<h3 id="WASM的应用场景"><a href="#WASM的应用场景" class="headerlink" title="WASM的应用场景"></a>WASM的应用场景</h3><ol>
+<li><p><strong>高性能计算</strong>：WASM可以用于运行高性能计算任务，如游戏、视频编辑、数据分析等。由于WASM可以将高级语言编译成高效的机器代码，因此在这些场景中可以实现更好的性能。</p>
+</li>
+<li><p><strong>游戏开发</strong>：WASM可以用于开发Web游戏，因为游戏通常需要高性能的计算能力和快速的响应速度。WASM可以将游戏逻辑和渲染代码编译成高效的机器代码，从而提高游戏的性能。</p>
+</li>
+<li><p><strong>桌面应用</strong>：WASM可以用于开发桌面应用，因为桌面应用通常需要高性能的计算能力和丰富的用户界面。WASM可以将桌面应用的代码编译成高效的机器代码，从而提高应用的性能。</p>
+</li>
+<li><p><strong>服务器端应用</strong>：WASM可以用于开发服务器端应用，因为服务器端应用通常需要处理大量的数据和计算任务。WASM可以将服务器端应用的代码编译成高效的机器代码，从而提高应用的性能。</p>
+</li>
+<li><p><strong>插件和扩展</strong>：WASM可以用于开发浏览器插件和扩展，因为插件和扩展通常需要高性能的计算能力和丰富的用户界面。WASM可以将插件和扩展的代码编译成高效的机器代码，从而提高插件和扩展的性能。</p>
+</li>
+</ol>
+<p>总之，WASM是一种强大的工具，可以用于开发高性能、安全且跨平台的Web应用。随着WASM的不断发展和优化，它将在更多的场景中得到应用。</p>
+<h2 id="Rust编写WASM模块"><a href="#Rust编写WASM模块" class="headerlink" title="Rust编写WASM模块"></a>Rust编写WASM模块</h2><p>WASM生态中，Rust是一个比较活跃且稳定发展的WASM构建选项。Rust的开发环境推荐使用VSCode的<code>Rust-Analyzer</code>，有非常好的类型提示和方便的调试测试。</p>
+<h3 id="工具与开发环境配置"><a href="#工具与开发环境配置" class="headerlink" title="工具与开发环境配置"></a>工具与开发环境配置</h3><p>WASM的编译依赖工具：<code>wasm-pack</code> 和 <code>wasm-opt</code>。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">cargo install wasm-pack<br>cargo install wasm-opt<br></code></pre></td></tr></table></figure>
+
+<p>随后在<code>cargo,.toml</code> 中添加<code>wasm-bindgen</code>依赖：</p>
+<figure class="highlight toml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs toml"><span class="hljs-section">[package]</span><br><span class="hljs-attr">name</span> = <span class="hljs-string">&quot;wasm_rust&quot;</span><br><span class="hljs-attr">version</span> = <span class="hljs-string">&quot;0.1.0&quot;</span><br><span class="hljs-attr">edition</span> = <span class="hljs-string">&quot;2021&quot;</span><br><br><span class="hljs-section">[dependencies]</span><br><span class="hljs-attr">wasm-bindgen</span> = <span class="hljs-string">&quot;0.2&quot;</span><br><br><span class="hljs-section">[lib]</span><br><span class="hljs-attr">crate-type</span> = [<span class="hljs-string">&quot;cdylib&quot;</span>]<br></code></pre></td></tr></table></figure>
+
+<h3 id="代码调试与编译"><a href="#代码调试与编译" class="headerlink" title="代码调试与编译"></a>代码调试与编译</h3><p>尽管提供了一个用于测试的整数加法的函数，我们可以编写一个递归的斐波拉契的数列函数。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">use</span> wasm_bindgen::prelude::*; <br><br><span class="hljs-meta">#[wasm_bindgen]</span><br><span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">add</span>(left: <span class="hljs-type">f32</span>, right: <span class="hljs-type">f32</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">f32</span> &#123;<br>    <span class="hljs-keyword">return</span> left + right;<br>&#125;<br><span class="hljs-meta">#[wasm_bindgen]</span><br><span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">fib</span>(n: <span class="hljs-type">i32</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">i32</span> &#123;<br>    <span class="hljs-keyword">if</span> n &lt;= <span class="hljs-number">0</span> &#123;<br>        -<span class="hljs-number">1</span><br>    &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (n == <span class="hljs-number">1</span>) || (n == <span class="hljs-number">2</span>) &#123;<br>        <span class="hljs-number">1</span><br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-title function_ invoke__">fib</span>(n - <span class="hljs-number">1</span>) + <span class="hljs-title function_ invoke__">fib</span>(n - <span class="hljs-number">2</span>);<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>需要注意的是，我们要对需要编译成wasm的函数前面加上<code>#[wasm_bindgen]</code>的宏才可以在前端中被调用。</p>
+<p>随后通过<code>wasm-pack</code>将Rust编译成WebAssembly：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">wasm-pack build --target web<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://s2.loli.net/2025/02/09/dBEP5SpYFostwi9.png" srcset="/img/loading.gif" lazyload alt="{93C2DAED-BAD6-4E64-944C-F996359B96CD}"></p>
+<p>成功的样子应该是这样的，你可以在目录找到<code>pkg</code>文件夹中的<code>.wasm</code>文件。</p>
+<h2 id="在前端项目使用WASM"><a href="#在前端项目使用WASM" class="headerlink" title="在前端项目使用WASM"></a>在前端项目使用WASM</h2><p>直接在当前目录下新建一个Vue项目使用WASM，先按照下方的指令创建Vue项目：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">npm create vue@latest<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://s2.loli.net/2025/02/09/3mNHxr4uqiTLlAC.png" srcset="/img/loading.gif" lazyload alt="{65877B01-D330-4CEC-8F47-6305BCB547AD}"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> vue-wasm<br>npm install<br></code></pre></td></tr></table></figure>
+
+<p>随后我们开始进行相关的配置。</p>
+<h3 id="前端项目的WASM配置"><a href="#前端项目的WASM配置" class="headerlink" title="前端项目的WASM配置"></a>前端项目的WASM配置</h3><p>配置<code>vite.config.js</code>或<code>vite.config.ts</code>：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title function_">defineConfig</span>(&#123;<br>  <span class="hljs-attr">assetsInclude</span>: [<span class="hljs-string">&quot;**/*.wasm&quot;</span>], <span class="hljs-comment">// &lt;= 添加这个以支持WASM</span><br>  <span class="hljs-attr">plugins</span>: [<br>    <span class="hljs-title function_">vue</span>(),<br>    <span class="hljs-title function_">vueDevTools</span>(),<br>  ],<br>  <span class="hljs-attr">resolve</span>: &#123;<br>    <span class="hljs-attr">alias</span>: &#123;<br>      <span class="hljs-string">&#x27;@&#x27;</span>: <span class="hljs-title function_">fileURLToPath</span>(<span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(<span class="hljs-string">&#x27;./src&#x27;</span>, <span class="hljs-keyword">import</span>.<span class="hljs-property">meta</span>.<span class="hljs-property">url</span>))<br>    &#125;,<br>  &#125;,<br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<p>这样才能开启对<code>wasm</code>的文件加载支持。</p>
+<h3 id="WASM加载器的使用"><a href="#WASM加载器的使用" class="headerlink" title="WASM加载器的使用"></a>WASM加载器的使用</h3><p>将编译好的文件夹复制到前端项目中，比如说新建一个<code>wasm</code>的文件夹，容纳其中的内容。随后新建一个js文件<code>wasmLoader.js</code>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">import</span> init, &#123; fib &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./wasm_rust&#x27;</span>;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">loadWasm</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-keyword">await</span> <span class="hljs-title function_">init</span>();<br>    <span class="hljs-keyword">return</span> &#123; fib &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这个组件将会暴露出我们要使用的函数，我们会在后面使用它。</p>
+<h3 id="组件使用WASM"><a href="#组件使用WASM" class="headerlink" title="组件使用WASM"></a>组件使用WASM</h3><p>给个简单的使用案例吧：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs vue">// App.vue<br>&lt;script setup&gt;<br>import &#123; ref &#125; from &#x27;vue&#x27;;<br>import &#123; loadWasm &#125; from &#x27;./wasm/wasmLoader&#x27;;<br>const result = ref(0);<br>const count = ref(0);<br><br>const calculate_fib = async() =&gt;&#123;<br>  const wasm = await loadWasm();<br>  count.value ++;<br>  result.value = wasm.fib(count.value)<br>&#125;<br>&lt;/script&gt;<br><br>&lt;template&gt;<br>  <br>  &lt;div&gt;<br>    &lt;h1&gt;WASM DEMO&lt;/h1&gt;<br>    &lt;h2&gt;Rust + Vue3 + WASM&lt;/h2&gt;<br>    &lt;button @click=&quot;calculate_fib&quot;&gt;斐波拉契数列第&#123;&#123; count &#125;&#125;项：&#123;&#123; result &#125;&#125;&lt;/button&gt;  <br>  &lt;/div&gt;<br>&lt;/template&gt;<br><br></code></pre></td></tr></table></figure>
+
+<p>然后修改一下样式就好：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs css">// <span class="hljs-attribute">src</span>/assets/<span class="hljs-selector-tag">main</span><span class="hljs-selector-class">.css</span>:<br>*&#123;<br>  <span class="hljs-attribute">padding</span>: <span class="hljs-number">0</span>;<br>  <span class="hljs-attribute">margin</span>: <span class="hljs-number">0</span>;<br>  <span class="hljs-attribute">color</span>: darkseagreen;<br>&#125;<br><br><span class="hljs-selector-id">#app</span>&#123;<br>  <span class="hljs-attribute">height</span>: <span class="hljs-number">100vh</span>;<br>  <span class="hljs-attribute">width</span>: <span class="hljs-number">100vw</span>;<br>  <span class="hljs-attribute">display</span>: flex;<br>  <span class="hljs-attribute">flex-shrink</span>: <span class="hljs-number">0</span>;<br>  <span class="hljs-attribute">align-items</span>: center;<br>  <span class="hljs-attribute">justify-content</span>: center;<br>  <span class="hljs-attribute">background-color</span>: <span class="hljs-built_in">rgb</span>(<span class="hljs-number">29</span>, <span class="hljs-number">29</span>, <span class="hljs-number">29</span>);<br>&#125;<br><br><span class="hljs-selector-tag">div</span>&#123;<br>  <span class="hljs-attribute">display</span>: flex;<br>  <span class="hljs-attribute">align-items</span>: center;<br>  <span class="hljs-attribute">flex-direction</span>: column; <br>&#125;<br><br><span class="hljs-selector-tag">h1</span>&#123;<br>  <span class="hljs-attribute">color</span>: aliceblue;<br>  <span class="hljs-attribute">font-size</span>: <span class="hljs-number">3vw</span>;<br>&#125;<br><br><span class="hljs-selector-tag">button</span>&#123;<br>  <span class="hljs-attribute">width</span>: <span class="hljs-number">20vw</span>;<br>  <span class="hljs-attribute">height</span>: <span class="hljs-number">5vh</span>;<br>  <span class="hljs-attribute">border</span>: <span class="hljs-number">2px</span> solid <span class="hljs-built_in">rgb</span>(<span class="hljs-number">114</span>, <span class="hljs-number">194</span>, <span class="hljs-number">170</span>); <br>  <span class="hljs-attribute">border-radius</span>: <span class="hljs-number">4px</span>;<br>  <span class="hljs-attribute">cursor</span>: pointer;<br>  <span class="hljs-attribute">margin-top</span>: <span class="hljs-number">5%</span>;<br>  <span class="hljs-attribute">font-size</span>: <span class="hljs-number">4vw</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>效果如图：</p>
+<p><img src="https://s2.loli.net/2025/02/22/qd5zKLb8TQXxyPo.png" srcset="/img/loading.gif" lazyload alt="{27DF79DE-19BB-4686-A2A3-349AB87CE2FD}"></p>
+<p>点击按钮会自增1，用于求斐波拉契的数列的第n项。大功告成~</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Rust/" class="category-chain-item">Rust</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/WebAssembly/" class="print-no-link">#WebAssembly</a>
+      
+        <a href="/tags/Rust/" class="print-no-link">#Rust</a>
+      
+        <a href="/tags/Vue/" class="print-no-link">#Vue</a>
+      
+    </div>
+  
+</div>
+
+
+              
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/nrf52840-8615459c9377/" title="制作一个类怒喵AFA的分体Alice键盘">
+                        <span class="hidden-mobile">制作一个类怒喵AFA的分体Alice键盘</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+      <p>Cybersh1t@2025</p>
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

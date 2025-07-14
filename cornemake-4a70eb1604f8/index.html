@@ -19,23 +19,27 @@
   <meta name="author" content="Cybersh1t">
   <meta name="keywords" content="">
   
-    <meta name="description" content="材料相关PLA高精度打印在如何用FDM打印高质量手板模型这个视频中，给出了PLA材料的高质量打印参数。 高细物体在龙门架结构的打印机中表现不佳。给出的打印参数如下：  喷嘴温度：首层220°C，室温25°C下可设置为203°C  参数覆盖：  回抽长度：1.6mm 回抽时抬升Z轴：0.4mm Z轴抬升方式：螺旋 回抽速度：50mm&#x2F;s   层高选项：0.12mm Fine@BBL A1">
+    <meta name="description" content="PCB下单我使用的PCB是由从这里得到的。作者修改了部分的灯位布局，最重要的是把按键从choc矮轴更换成了佳达隆矮轴（价格更便宜一点，且用的是十字键帽），让国人用户也能方便地体验到矮轴。PCB我是使用KiCAD将左手板和右手板拆分，然后导出钻孔文件和Gerber制板文件一同压缩成一个压缩包，然后将这个压缩包发给PCB制作的厂子进行印刷制作。 国内的PCB制作除了势头强劲的嘉立创，还有一些其他的企业">
 <meta property="og:type" content="article">
-<meta property="og:title" content="3D 打印相关记录">
-<meta property="og:url" content="https://blog.cybercolyce.cn/3DPrinter-Records-1a7eeee67616/index.html">
+<meta property="og:title" content="Corne构建记录">
+<meta property="og:url" content="https://blog.cybercolyce.cn/cornemake-4a70eb1604f8/index.html">
 <meta property="og:site_name" content="Laked22">
-<meta property="og:description" content="材料相关PLA高精度打印在如何用FDM打印高质量手板模型这个视频中，给出了PLA材料的高质量打印参数。 高细物体在龙门架结构的打印机中表现不佳。给出的打印参数如下：  喷嘴温度：首层220°C，室温25°C下可设置为203°C  参数覆盖：  回抽长度：1.6mm 回抽时抬升Z轴：0.4mm Z轴抬升方式：螺旋 回抽速度：50mm&#x2F;s   层高选项：0.12mm Fine@BBL A1">
+<meta property="og:description" content="PCB下单我使用的PCB是由从这里得到的。作者修改了部分的灯位布局，最重要的是把按键从choc矮轴更换成了佳达隆矮轴（价格更便宜一点，且用的是十字键帽），让国人用户也能方便地体验到矮轴。PCB我是使用KiCAD将左手板和右手板拆分，然后导出钻孔文件和Gerber制板文件一同压缩成一个压缩包，然后将这个压缩包发给PCB制作的厂子进行印刷制作。 国内的PCB制作除了势头强劲的嘉立创，还有一些其他的企业">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://blog.cybercolyce.cn/imgs/Pochita.jpg">
-<meta property="article:published_time" content="2024-12-15T11:27:07.843Z">
-<meta property="article:modified_time" content="2024-12-15T17:09:09.686Z">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/686a8c5258cb8da5c892a8f5.jpg">
+<meta property="article:published_time" content="2025-07-14T13:00:12.209Z">
+<meta property="article:modified_time" content="2025-07-14T16:17:58.937Z">
 <meta property="article:author" content="Cybersh1t">
+<meta property="article:tag" content="zmk">
+<meta property="article:tag" content="摸鱼">
+<meta property="article:tag" content="键盘">
+<meta property="article:tag" content="无线">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://blog.cybercolyce.cn/imgs/Pochita.jpg">
+<meta name="twitter:image" content="https://pic1.imgdb.cn/item/686a8c5258cb8da5c892a8f5.jpg">
   
   
   
-  <title>3D 打印相关记录 - Laked22</title>
+  <title>Corne构建记录 - Laked22</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -201,7 +205,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">3D 打印相关记录</span>
+            <span id="subtitle">Corne构建记录</span>
           
         </div>
 
@@ -212,8 +216,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-12-15 19:27" pubdate>
-          2024年12月15日 晚上
+        <time datetime="2025-07-14 21:00" pubdate>
+          2025年7月14日 晚上
         </time>
       </span>
     
@@ -224,7 +228,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          468 字
+          1.9k 字
         
       </span>
     
@@ -235,7 +239,7 @@
         
         
         
-          4 分钟
+          16 分钟
         
       </span>
     
@@ -272,68 +276,226 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">3D 打印相关记录</h1>
+            <h1 id="seo-header">Corne构建记录</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="材料相关"><a href="#材料相关" class="headerlink" title="材料相关"></a>材料相关</h2><h3 id="PLA高精度打印"><a href="#PLA高精度打印" class="headerlink" title="PLA高精度打印"></a>PLA高精度打印</h3><p>在<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV17C411E7Hp">如何用FDM打印高质量手板模型</a>这个视频中，给出了PLA材料的高质量打印参数。</p>
-<p>高细物体在龙门架结构的打印机中表现不佳。给出的打印参数如下：</p>
+                <h2 id="PCB下单"><a href="#PCB下单" class="headerlink" title="PCB下单"></a>PCB下单</h2><p>我使用的PCB是由从<a target="_blank" rel="noopener" href="https://github.com/beekeeb/crkbd-glp.git">这里</a>得到的。作者修改了部分的灯位布局，最重要的是把按键从choc矮轴更换成了佳达隆矮轴（价格更便宜一点，且用的是十字键帽），让国人用户也能方便地体验到矮轴。PCB我是使用KiCAD将左手板和右手板拆分，然后导出钻孔文件和Gerber制板文件一同压缩成一个压缩包，然后将这个压缩包发给PCB制作的厂子进行印刷制作。</p>
+<p>国内的PCB制作除了势头强劲的嘉立创，还有一些其他的企业，比如捷配。捷配提供的三张板免费打样可以很好地免费打印一些在嘉立创中超出免费打样尺寸的板子，这对制作键盘来讲非常有帮助。我这次打板也是在捷配进行打印的，感恩比心~</p>
+<p>如果你也懒，不想自己下载KiCAD打开编辑PCB，那么你可以用我的PCB Gerber文件，我没有进行任何改动：</p>
+<h2 id="焊接与外壳组装"><a href="#焊接与外壳组装" class="headerlink" title="焊接与外壳组装"></a>焊接与外壳组装</h2><p>你需要准备如下的材料进行Corne键盘的制作：</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Count</th>
+<th>Remarks</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>PCB</td>
+<td>1 set</td>
+<td></td>
+</tr>
+<tr>
+<td>Top plate</td>
+<td>2 sheets</td>
+<td>1.2mm thick</td>
+</tr>
+<tr>
+<td>Bottom plate</td>
+<td>2 sheets</td>
+<td></td>
+</tr>
+<tr>
+<td>OLED cover</td>
+<td>2 sheets</td>
+<td></td>
+</tr>
+<tr>
+<td>Pro Micro or equivalent</td>
+<td>2</td>
+<td></td>
+</tr>
+<tr>
+<td>TRRS jack</td>
+<td>2</td>
+<td></td>
+</tr>
+<tr>
+<td>Reset switch</td>
+<td>2</td>
+<td></td>
+</tr>
+<tr>
+<td>Diodes</td>
+<td>42</td>
+<td>SMD Only (SOD-123 Package)</td>
+</tr>
+<tr>
+<td>Gateron Low Profile Hotswap Sockets</td>
+<td>42</td>
+<td></td>
+</tr>
+<tr>
+<td>Key switches</td>
+<td>42</td>
+<td>Only compatible with Gateron KS-33 &#x2F; KS-27</td>
+</tr>
+<tr>
+<td>Keycaps</td>
+<td>42 pieces</td>
+<td>1u 40 pcs, 1.5u 2 pcs <a target="_blank" rel="noopener" href="https://showcase.beekeeb.com/the-keycaps-of-gateron-low-profile-key-switches-and-kailh-choc-v1-key-switch/">Keycaps Comparison</a></td>
+</tr>
+<tr>
+<td>Spacer M2 5mm</td>
+<td>10 pieces</td>
+<td>For Case assembly</td>
+</tr>
+<tr>
+<td>Spacer M2 9mm</td>
+<td>4 pieces</td>
+<td>For OLED cover</td>
+</tr>
+<tr>
+<td>Screw M2 4mm</td>
+<td>28 screws</td>
+<td></td>
+</tr>
+<tr>
+<td>Rubber feet</td>
+<td>8 pieces</td>
+<td></td>
+</tr>
+<tr>
+<td>TRRS (4 poles) cable</td>
+<td>1</td>
+<td></td>
+</tr>
+<tr>
+<td>Micro USB or USB-C cable</td>
+<td>1</td>
+<td>Avoid charge-only cables</td>
+</tr>
+</tbody></table>
+<h2 id="固件编写"><a href="#固件编写" class="headerlink" title="固件编写"></a>固件编写</h2><p>固件我使用了QMK进行编写。当然你也可以当蓝狗直接使用网上别人编译好的：</p>
+<p>TODO</p>
+<h2 id="第一把佳达隆矮轴分体键盘！"><a href="#第一把佳达隆矮轴分体键盘！" class="headerlink" title="第一把佳达隆矮轴分体键盘！"></a>第一把佳达隆矮轴分体键盘！</h2><p>恭喜33成为首位收到我制作的佳达隆矮轴Corne分体键盘（但作为一份生日礼物它实在是迟到了太久太久…）！Corne是一把分体设计、符合人体工学的小配列键盘，如果作为文字工作&#x2F;代码编写的生产力键盘来使用的话会非常麻烦，但如果从便携、简单的游戏键盘角度来看，它是个非常好的伴侣：</p>
 <ul>
-<li><p>喷嘴温度：首层220°C，室温25°C下可设置为203°C</p>
+<li><p>直列设计，减少手指纵向移动的距离，缓和手部疲劳；</p>
 </li>
-<li><p>参数覆盖：</p>
+<li><p>使用了QMK固件，并使用了Vial进行多种功能的实现；</p>
+</li>
+<li><p>分体式左主手设计，在游戏场景下可以把右半侧的键盘分离，实现更少的桌面空间占用；</p>
+</li>
+<li><p>高度的可自定义选项，不仅可以自行分配按键和布局，还能有多种炫彩光效；</p>
+</li>
+<li><p>具备后期升级为无线键盘的潜力…!实现真正的无线（连中间的连接线都不需要了）</p>
+</li>
+</ul>
+<p>下面我会简要的介绍一下Corne的使用~</p>
+<h2 id="使用说明"><a href="#使用说明" class="headerlink" title="使用说明"></a>使用说明</h2><p>首先对于使用一把分体式的有线键盘，必须要说明的就是：</p>
+<p><strong>不要在连接电脑时直接插拔两块键盘之间的连接线！</strong></p>
+<p><strong>不要在连接电脑时直接插拔两块键盘之间的连接线！</strong></p>
+<p><strong>不要在连接电脑时直接插拔两块键盘之间的连接线！</strong></p>
+<p>如果这样做的话，主控（就是显示屏下面的两块黑色板子）会直接烧坏的(っ╥╯﹏╰╥c)，更换一个要差不多40块钱呢！</p>
+<p>使用前，需要将USB-Typc连接线接入导Corne左半边的主控板type-c接口，大概过1-2秒键盘就会亮起灯光，你就可以开始使用啦！</p>
+<h2 id="键位设置"><a href="#键位设置" class="headerlink" title="键位设置"></a>键位设置</h2><p>可以使用<a target="_blank" rel="noopener" href="https://vial.rocks/">Vial Web</a>对Corne键盘进行键位设置（可能需要科学上网）。我设置了这样的键位：</p>
+<p><img src="https://pic1.imgdb.cn/item/686a7b7758cb8da5c89293c5.png" srcset="/img/loading.gif" lazyload alt="1751808719311"></p>
+<p>给你简单解释一下这里面的意思吧！</p>
 <ul>
-<li>回抽长度：1.6mm</li>
-<li>回抽时抬升Z轴：0.4mm</li>
-<li>Z轴抬升方式：螺旋</li>
-<li>回抽速度：50mm&#x2F;s</li>
+<li>白色是第一层（<strong>base</strong>），这里主要放的是字母区以及常用的功能按键，例如 esc，ctrl，backspace 等。</li>
+<li>“(Ctrl)” 带小括号的是表示这个按键长按时是括号内的键值，例如“Tab (Ctrl)”表示的就是点击输出 Tab, 按住时是 Ctrl。这个功能叫做 “MT”，即 “Mod-Tap”。<br>“[SETTING]” 中括号表示切层，我只用按住切层，这样可以自动恢复到默认层，这样你每次按键都是固定的，不会由于忘记回到默认层而破坏输入。“Space ([NUM])”表示点击是“Space”，按住切换到“NUM”层，这个行为叫做“LT”，即“Layer-Tap”。</li>
+<li>蓝色是第二层（<strong>NUM</strong>），这里是 F 区，数字区，以及编辑区和方向键。</li>
+<li>绿色是第三层（<strong>SYMBOL</strong>），这里是符号区，第一行对应数字区的符号，右手 2，3 行上下对应，分别是直接输出的符号和原本需要按 shift 输出的符号。（这里的“|”和“\”根据我的习惯做了交换）。</li>
+<li>红色是第四层（<strong>SETTINGS</strong>），这里用了配置蓝牙，调整灯光。<br>左手拇指按下切换到数字层，右手拇指按下切换到符号层，一起按则进入设置层。</li>
 </ul>
-</li>
-<li><p>层高选项：0.12mm Fine@BBL A1</p>
-</li>
-</ul>
-<p>如果要高精度+快速，可以开启可变层高功能：</p>
-<ul>
-<li><p>打印机设置：</p>
-<ul>
-<li>挤出机：层高限制设为<code>[0.08,0.12]</code> mm。</li>
-<li>选中一个部件，选择切片软件上方可变层高菜单，选择自适应</li>
-</ul>
-</li>
-<li><p>质量：</p>
-<ul>
-<li>接缝位置：背面，摆盘时把看不见的面摆到背面</li>
-<li>高级：顶面单层 墙不使用</li>
-</ul>
-</li>
-<li><p>强度：</p>
-<ul>
-<li>墙层数：3层</li>
-<li>稀疏填充图案：螺旋体</li>
-<li>稀疏填充密度：15%</li>
-</ul>
-</li>
-<li><p>速度：</p>
-<ul>
-<li>加速度：外墙：1000mm&#x2F;s^2</li>
-</ul>
-</li>
-<li><p>支撑：</p>
-<ul>
-<li>开启支撑，树状自动</li>
-<li>顶部Z距离：0.07mm</li>
-<li>主体图案线距：1.2mm</li>
-<li>顶部接触面层数：5层</li>
-<li>支撑面图案：交叠的直线</li>
-<li>顶部接触面线距：0.4mm</li>
-<li>支撑独立层高：不勾选</li>
-</ul>
-</li>
-</ul>
-<h3 id="毛绒表面"><a href="#毛绒表面" class="headerlink" title="毛绒表面"></a>毛绒表面</h3><p>使用了 <a target="_blank" rel="noopener" href="https://makerworld.com.cn/zh/models/128405?from=search#profileId-18986">《电锯人》中的波奇塔</a> 的模型，开启了毛绒表面。但是由于这种组合件的接触部分也会被识别为表面，所以需要在组合件的接触面增加一个修改器，将修改器的表面尽可能地去贴合组合件的表面，并针对该修改器对象关闭毛绒表面。这是我使用0.4mm层高打印出来的波奇塔~</p>
-<p><img src="/imgs/Pochita.jpg" srcset="/img/loading.gif" lazyload alt="with BambuA1@0.4mm"></p>
-<p>太可爱了，但是组合都还是差了一点。要么把比例缩小试一下，或许能解决这个问题。</p>
+<p>其中，层的信息是可以通过Corne键盘的左侧小屏幕观察得到的哦！在Corne左侧键盘的屏幕里，页面是这样的：</p>
+<p><img src="https://pic1.imgdb.cn/item/686a7eb158cb8da5c8929824.png" srcset="/img/loading.gif" lazyload></p>
+<p>从左到右分别是第一层（Base）、第二层（NUM）、第三层（SYMBOL）以及第四层（Settings）。第四层是最少用到的层，所以只需要记住：左手控制数字，右手控制符号就好。</p>
+<h2 id="尾声"><a href="#尾声" class="headerlink" title="尾声"></a>尾声</h2><p>看一下最终成品吧！</p>
+<p><img src="https://pic1.imgdb.cn/item/686a91af58cb8da5c892adc2.jpg" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://pic1.imgdb.cn/item/686a8c5258cb8da5c892a8f5.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>这把键盘的制作其实遇到了很多很多的问题…首先是绘制PCB时没有佳达隆矮轴的轴座，直接拿罗技的一块剪线板子的尺寸量的，导致画的一张板封装对不上直接报废；修改后打板子结果重复打错了左手部分，又浪费了一个月的时间（没有开企业认证只有一月一次免费）；然后是对主控烧写固件时，图便宜买了个13块钱的主控，结果固件烧录不进去，以为是自己的软件编译出问题，排查到了凌晨两点半都没解决，最后通过交流群听群友建议买了无名科技的RP2040 Helios开发板（价格差不多是便宜的那家的两倍），终于烧录成功了…</p>
+<p>这般键盘的制作可谓历经波折。但也对我的动手能力有一定的提升，还积累了一些宝贵的焊接经验（比如我已经开始使用加热焊台对WS2812以及SK6812进行焊接，省时方便还不容易焊坏零件），同时这把Corne的外壳也是我3D建模并使用拓竹A1打印得到的，成本约等于5块钱吧！最后我来报一下正式的耗材成本吧：</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>数量</th>
+<th>渠道</th>
+<th>总价格</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>PCB-右侧板</td>
+<td>1</td>
+<td>捷配每月免费打样</td>
+<td>0￥</td>
+</tr>
+<tr>
+<td>PCB-左侧板</td>
+<td>1</td>
+<td>捷配每月免费打样</td>
+<td>0￥</td>
+</tr>
+<tr>
+<td>佳达隆矮轴</td>
+<td>36</td>
+<td>淘宝随便一家店</td>
+<td>14.4￥</td>
+</tr>
+<tr>
+<td>RP2040 Helios主控</td>
+<td>2</td>
+<td>淘宝-无名科技</td>
+<td>51.6￥</td>
+</tr>
+<tr>
+<td>1N4148 SOD-123</td>
+<td>36</td>
+<td>淘宝随便一家店</td>
+<td>2￥</td>
+</tr>
+<tr>
+<td>SK6812-mini反贴</td>
+<td>36</td>
+<td>淘宝随便一家店</td>
+<td>忘了 以前的存货</td>
+</tr>
+<tr>
+<td>WS2812</td>
+<td>12</td>
+<td>淘宝随便一家店</td>
+<td>忘了 以前的存货</td>
+</tr>
+<tr>
+<td>佳达隆矮轴</td>
+<td>36</td>
+<td>淘宝-哈狐 ChosFox企业店</td>
+<td>47.5￥</td>
+</tr>
+<tr>
+<td>超低结构排母12pin</td>
+<td>4</td>
+<td>淘宝-上一电子科技</td>
+<td>31.2￥</td>
+</tr>
+<tr>
+<td>超低结构排针12pin</td>
+<td>4</td>
+<td>淘宝-上一电子科技</td>
+<td>31.2￥</td>
+</tr>
+<tr>
+<td>0.92寸显示屏</td>
+<td>2</td>
+<td>淘宝随便一家店</td>
+<td>18￥</td>
+</tr>
+</tbody></table>
+<p>我陷入了沉思…为什么电路板免费了也要那么高的成本啊！！！但其实可以抛弃掉一些没必要的低结构排母、排针以及显示屏、两种灯，这样可以进一步压缩成本，做一把超低成本的Corne。</p>
 
                 
               </div>
@@ -352,7 +514,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E6%91%B8%E9%B1%BC%E5%A8%B1%E4%B9%90/" class="category-chain-item">摸鱼娱乐</a>
+  <a href="/categories/%E9%94%AE%E7%9B%98%E5%88%B6%E4%BD%9C/" class="category-chain-item">键盘制作</a>
   
   
 
@@ -364,6 +526,19 @@
     </div>
   
   
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/zmk/" class="print-no-link">#zmk</a>
+      
+        <a href="/tags/%E6%91%B8%E9%B1%BC/" class="print-no-link">#摸鱼</a>
+      
+        <a href="/tags/%E9%94%AE%E7%9B%98/" class="print-no-link">#键盘</a>
+      
+        <a href="/tags/%E6%97%A0%E7%BA%BF/" class="print-no-link">#无线</a>
+      
+    </div>
+  
 </div>
 
 
@@ -374,15 +549,21 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/StarGazers%E5%88%B6%E4%BD%9C-de2d6ab6f7cd/" title="【摸】制作一个Github星标搜索应用">
+                      <a href="/Cygnus%E6%9E%84%E5%BB%BA-a30739ae4799/" title="Cygnus构建记录">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">【摸】制作一个Github星标搜索应用</span>
+                        <span class="hidden-mobile">Cygnus构建记录</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
                   </article>
                   <article class="post-next col-6">
                     
+                    
+                      <a href="/StarGazers%E5%88%B6%E4%BD%9C-de2d6ab6f7cd/" title="【摸】制作一个Github星标搜索应用">
+                        <span class="hidden-mobile">【摸】制作一个Github星标搜索应用</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
                     
                   </article>
                 </div>
