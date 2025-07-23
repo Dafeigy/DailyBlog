@@ -4,6 +4,35 @@
   
   
   <entry>
+    <title>WebAssembly进阶</title>
+    <link href="/WASM%E8%BF%9B%E9%98%B6-9eee9621e4e4/"/>
+    <url>/WASM%E8%BF%9B%E9%98%B6-9eee9621e4e4/</url>
+    
+    <content type="html"><![CDATA[<h2 id="WASM中的对象使用"><a href="#WASM中的对象使用" class="headerlink" title="WASM中的对象使用"></a>WASM中的对象使用</h2><p>上一节简单介绍了普通函数在打包成WASM后的应用。接下来，我希望可以在WASM实现对象的构建以及方法的调用。本次的构建是为了后期的Ophiculus项目中的LTcode的实现，我将以Python代码作为参照，在Rust中实现：</p><ul><li>码流生成器。由Rust（WASM）构建的一个Generator，支持Python中的<code>yield</code>功能，但不是利用为了Async&#x2F;await的异步编程特性。具体来说，我将构建一个Generator，该Generator将在每次被访问时循环地吐出已有的单个字符数据。</li><li>对象的构建与方法的调用。我需要将其编译成WASM并在前端页面进行调用。</li></ul><h2 id="Genrator的原生实现（？"><a href="#Genrator的原生实现（？" class="headerlink" title="Genrator的原生实现（？"></a>Genrator的原生实现（？</h2><p>简单地先构建一个Generator，它的数据为0-10。在每次访问时，返回的数据会+1，直至达到最大值后又重新从0开始返回。</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">MyGenerator</span> &#123;<br>    count: <span class="hljs-type">u32</span>,<br>    max_count: <span class="hljs-type">u32</span>,<br>    is_reset: <span class="hljs-type">bool</span>,<br>&#125;<br><br><span class="hljs-keyword">impl</span> <span class="hljs-title class_">MyGenerator</span> &#123;<br>    <span class="hljs-keyword">fn</span> <span class="hljs-title function_">new</span>(max_count: <span class="hljs-type">u32</span>) <span class="hljs-punctuation">-&gt;</span> MyGenerator &#123;<br>        MyGenerator &#123;<br>            count: <span class="hljs-number">0</span>,<br>            max_count,<br>            is_reset: <span class="hljs-literal">true</span>,<br>        &#125;<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">impl</span> <span class="hljs-title class_">Iterator</span> <span class="hljs-keyword">for</span> <span class="hljs-title class_">MyGenerator</span> &#123;<br>    <span class="hljs-keyword">type</span> <span class="hljs-title class_">Item</span> = <span class="hljs-type">u32</span>;<br><br>    <span class="hljs-keyword">fn</span> <span class="hljs-title function_">next</span>(&amp;<span class="hljs-keyword">mut</span> <span class="hljs-keyword">self</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">Option</span>&lt;<span class="hljs-keyword">Self</span>::Item&gt; &#123;<br><br>        <span class="hljs-keyword">if</span> <span class="hljs-keyword">self</span>.count &lt; <span class="hljs-keyword">self</span>.max_count &#123;<br>            <span class="hljs-keyword">self</span>.count += <span class="hljs-number">1</span>;<br>            <span class="hljs-title function_ invoke__">Some</span>(<span class="hljs-keyword">self</span>.count)<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-keyword">self</span>.is_reset = <span class="hljs-literal">true</span>;<br>            <span class="hljs-keyword">self</span>.count = <span class="hljs-number">0</span>;<br>            <span class="hljs-title function_ invoke__">Some</span>(<span class="hljs-keyword">self</span>.count)<br>        &#125;<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">fn</span> <span class="hljs-title function_">get_next_value</span>(generator: &amp;<span class="hljs-keyword">mut</span> MyGenerator) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">Option</span>&lt;<span class="hljs-type">u32</span>&gt; &#123;<br>    generator.<span class="hljs-title function_ invoke__">next</span>()<br>&#125;<br><br><span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>() &#123;<br>    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">gene</span> = MyGenerator::<span class="hljs-title function_ invoke__">new</span>(<span class="hljs-number">10</span>);<br><br>    <span class="hljs-comment">// for i in &amp;mut gene &#123;</span><br>    <span class="hljs-comment">//     println!(&quot;Next value: &#123;&#125;&quot;, i);</span><br>    <span class="hljs-comment">// &#125;</span><br>    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">i</span>:<span class="hljs-type">i32</span> = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">while</span> i &lt; <span class="hljs-number">20</span> &#123;<br>        <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;&#123;:?&#125;&quot;</span>, i);<br>        <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Next value: &#123;:?&#125;&quot;</span>, <span class="hljs-title function_ invoke__">get_next_value</span>(&amp;<span class="hljs-keyword">mut</span> gene));<br>        i +=<span class="hljs-number">1</span>;<br>    &#125;<br><br>&#125;<br><br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>Rust</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>WebAssembly</tag>
+      
+      <tag>Rust</tag>
+      
+      <tag>Vue</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Transformer杂记</title>
     <link href="/transformer-9682692f6aa3/"/>
     <url>/transformer-9682692f6aa3/</url>
