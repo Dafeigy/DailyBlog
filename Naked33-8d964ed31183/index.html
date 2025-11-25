@@ -19,26 +19,23 @@
   <meta name="author" content="Cybersh1t">
   <meta name="keywords" content="">
   
-    <meta name="description" content="KVCache是什么KVcache一句话来说就是把每个token在过Transformer时乘以$W_K$,$W_V$这俩参数矩阵的结果缓存下来。KVCache是针对推理时而言的，训练时KV没必要进行缓存。推理解码生成时都是自回归auto-regressive的方式，也就是每次生成一个token，都要依赖之前token的结果。如果没生成一个token的时候乘以W_K,W_V这俩参数矩阵要对所有to">
+    <meta name="description" content="泥嚎！说了要给你做生日礼物鸽了好久好久了，其实没有忘记你的生日啦！只是一直没想到有什么比较独特的东西可以送给你，所以决定自己做一个好玩的小电子产品出来作为你的生日礼物。这个小东西其实是一个使用 ESP32S3 芯片作为主控的超级迷你掌机，它的主要功能其实就是玩一些GAME BOY平台的游戏。当然，如果只是仅能玩游戏的话，我是不会花费那么久时间去做的，它还有一些其他的小玩法，希望可以给你带来一些新">
 <meta property="og:type" content="article">
-<meta property="og:title" content="KVCache初探">
-<meta property="og:url" content="https://blog.cybercolyce.cn/KVCache-beeb481dee12/index.html">
+<meta property="og:title" content="33的生日礼物">
+<meta property="og:url" content="https://blog.cybercolyce.cn/Naked33-8d964ed31183/index.html">
 <meta property="og:site_name" content="Laked22">
-<meta property="og:description" content="KVCache是什么KVcache一句话来说就是把每个token在过Transformer时乘以$W_K$,$W_V$这俩参数矩阵的结果缓存下来。KVCache是针对推理时而言的，训练时KV没必要进行缓存。推理解码生成时都是自回归auto-regressive的方式，也就是每次生成一个token，都要依赖之前token的结果。如果没生成一个token的时候乘以W_K,W_V这俩参数矩阵要对所有to">
+<meta property="og:description" content="泥嚎！说了要给你做生日礼物鸽了好久好久了，其实没有忘记你的生日啦！只是一直没想到有什么比较独特的东西可以送给你，所以决定自己做一个好玩的小电子产品出来作为你的生日礼物。这个小东西其实是一个使用 ESP32S3 芯片作为主控的超级迷你掌机，它的主要功能其实就是玩一些GAME BOY平台的游戏。当然，如果只是仅能玩游戏的话，我是不会花费那么久时间去做的，它还有一些其他的小玩法，希望可以给你带来一些新">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://www.omrimallis.com/assets/llama_cpp_kqv_iter.png.webp">
-<meta property="article:published_time" content="2025-07-15T16:02:35.357Z">
-<meta property="article:modified_time" content="2025-07-15T16:03:52.266Z">
+<meta property="og:image" content="https://s2.loli.net/2025/10/30/vXILiBGW6fwt8my.png">
+<meta property="article:published_time" content="2025-11-25T12:22:54.259Z">
+<meta property="article:modified_time" content="2025-11-25T12:26:56.764Z">
 <meta property="article:author" content="Cybersh1t">
-<meta property="article:tag" content="LLM">
-<meta property="article:tag" content="Transformer">
-<meta property="article:tag" content="优化">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://www.omrimallis.com/assets/llama_cpp_kqv_iter.png.webp">
+<meta name="twitter:image" content="https://s2.loli.net/2025/10/30/vXILiBGW6fwt8my.png">
   
   
   
-  <title>KVCache初探 - Laked22</title>
+  <title>33的生日礼物 - Laked22</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -204,7 +201,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">KVCache初探</span>
+            <span id="subtitle">33的生日礼物</span>
           
         </div>
 
@@ -215,8 +212,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-07-16 00:02" pubdate>
-          2025年7月16日 凌晨
+        <time datetime="2025-11-25 20:22" pubdate>
+          2025年11月25日 晚上
         </time>
       </span>
     
@@ -227,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          935 字
+          948 字
         
       </span>
     
@@ -275,42 +272,33 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">KVCache初探</h1>
+            <h1 id="seo-header">33的生日礼物</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="KVCache是什么"><a href="#KVCache是什么" class="headerlink" title="KVCache是什么"></a>KVCache是什么</h2><p>KVcache一句话来说就是把每个token在过Transformer时乘以$W_K$,$W_V$这俩参数矩阵的结果缓存下来。KVCache是针对推理时而言的，训练时KV没必要进行缓存。推理解码生成时都是自回归auto-regressive的方式，也就是每次生成一个token，都要依赖之前token的结果。如果没生成一个token的时候乘以W_K,W_V这俩参数矩阵要对所有token都算一遍，代价非常大，所以缓存起来就叫kvcache。如果每次生成一个token的时候乘以$W_K$,$W_V$这俩参数矩阵要对所有token都算一遍，代价非常大，所以缓存起来就叫kvcache。</p>
-<p>举个例子，假如prompt&#x3D;“The largest city of China is”，输入是6个tokens，返回是”Shang Hai”这两个tokens。整个生成过程如下：</p>
-<ol>
-<li><p>当生成”Shang”之前，kvcache把输入6个tokens都乘以W_K,W_V这两参数矩阵，也就是缓存了6个kv。这时候过self-attention+采样方案(greedy、beam、top k、top p等)，得到”Shang”这个token</p>
-</li>
-<li><p>当生成”Shang”之后，再次过transformer的token只有”Shang”这一个token，而不是整个“The largest city of China is Shang”句子，这时再把”Shang”这一个token对应的kvcache和之前6个tokens对应的kvcache拼起来，成为了7个kvcache。”Shang”这一个token和前面6个tokens就可以最终生成”Hai”这个token。</p>
-</li>
-</ol>
-<h2 id="为什么没有QCache"><a href="#为什么没有QCache" class="headerlink" title="为什么没有QCache"></a>为什么没有QCache</h2><p>为什么不缓存$W_Q$矩阵相乘的结果？一句话来说Q cache并没有用。我们观察自注意力计算公式：</p>
-<p>$$<br>Attention(Q,K,V) &#x3D; Softmax(\frac{QK^T}{\sqrt{d}})V<br>$$</p>
-<p>每次新多一个Q中的token的query时，用新多的这个token和所有tokens的K、V去乘就好了，Q Cache就成多余的了。再拿刚才例子强调一下，当生成”Shang”之后，再次过transformer的token只有”Shang”这一个token，而不是整个“The largest city of China is Shang”句子。</p>
-<p>那么问题就又来了，生成”Shang”这个token时，感觉是“The largest city of China is”这6个tokens的query都用了，但是生成”Hai”这个token时，只依赖了”Shang”这个token的query嘛？这个问题其实是没有的，每个token的生成都只依赖前一个Q和之前所有的KV：</p>
-<p><img src="https://www.omrimallis.com/assets/llama_cpp_kqv_iter.png.webp" srcset="/img/loading.gif" lazyload></p>
-<p>如图所示【TODO】：</p>
-<ol>
-<li><p>训练的时候计算注意力score时，’Quant’,‘um’,’_mechan’的下一个token在矩阵乘法时对应的是蓝框，已经被mask没了；</p>
-</li>
-<li><p>推理的时候在给定’Quant’,‘um’,’_mechan’的时候，已有的序列长度是3，矩阵乘法是由图中红框决定的，刚好和未来没读到的蓝框token没有任何关系。同时，‘_mechan’的下一个token只和’_mechan’的Q有关，和’Quant’,’um’的Q是无关的。所以每个token的生成都只依赖前一个Q和之前所有的KV，这也是kvcache能work下去的基础。</p>
-</li>
-</ol>
-<p>KV Cache 加速推理的原理是：在自注意力层，本来每次要做矩阵乘法 $\mathbf Q\mathbf K^T$，现在因为 KV Cache 的存在，我们不需要整个 $\mathbf Q$ 和 $\mathbf K^T$ 做矩阵乘法，只需要每次输入的最后一个 token 的 query 向量 $\mathbf q$ 和 $\mathbf K$ 做向量 - 矩阵乘法，之后更新 KV Cache 缓存即可。</p>
-<p>采用了 KV Cache 的话 LLM 的推理过程可以看成 2 个阶段</p>
-<p>第一次迭代的时候，此时 KV Cache 为空，所有的输入的 token 都需要为其计算 key, value, query 向量，其中 key 和 value 会被缓存起来<br>后续的每一次迭代，只需要为新的 token 计算 key、value、query，并更新 KV Cache<br>KV Cache 加速推理的代价是显存占用会变高，所以它是空间换时间的办法，关于开不开 KV Cache 的显存占用峰值的对比可以看 这里。我在这里放一个总结：</p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
-<li><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/taoqick/article/details/137476233">kvcache原理、参数量、代码详解</a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/662498827">大模型推理加速：看图学KV Cache</a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://martinlwx.github.io/zh-cn/llm-inference-optimization-kv-cache/">LLM 推理加速 - KV Cache</a></p>
-</li>
-</ol>
+                <p><img src="https://pic1.imgdb.cn/item/69258c513203f7be00323800.jpg%22" srcset="/img/loading.gif" lazyload></p>
+<p>泥嚎！说了要给你做生日礼物鸽了好久好久了，其实没有忘记你的生日啦！只是一直没想到有什么比较独特的东西可以送给你，所以决定自己做一个好玩的小电子产品出来作为你的生日礼物。这个小东西其实是一个使用 ESP32S3 芯片作为主控的超级迷你掌机，它的主要功能其实就是玩一些GAME BOY平台的游戏。当然，如果只是仅能玩游戏的话，我是不会花费那么久时间去做的，它还有一些其他的小玩法，希望可以给你带来一些新奇的体验捏！如果你感兴趣的话，甚至还可以自己开发一些应用，我会在后面的部分简单的介绍一下~那么接下来我就要向你介绍这个鸽了你超级无敌久的小掌机了！</p>
+<h2 id="布局介绍"><a href="#布局介绍" class="headerlink" title="布局介绍"></a>布局介绍</h2><p><img src="https://s2.loli.net/2025/10/30/vXILiBGW6fwt8my.png" srcset="/img/loading.gif" lazyload alt="掌机键位布局"></p>
+<p>按键的布局参考了很经典的样式，应该可以非常顺利的适应~</p>
+<h2 id="应用介绍"><a href="#应用介绍" class="headerlink" title="应用介绍"></a>应用介绍</h2><p>首先我要先教你开关机！开机就是长按里面的START键，关机则是再设定界面中选中POWER项并选择POWER OFF即可~除了设置之外，还有其他的一些应用：</p>
+<ul>
+<li><code>Nofrendo</code>：这里放置了 NES 的游戏，这些游戏是存放在TF卡槽中的SD卡里面的，如果你有喜欢的 NES 游戏可以通过修改SD卡里面的内容进行替换。</li>
+<li><code>BLE Gamepad</code>：蓝牙手柄。它可以连接你的电脑并充当游戏手柄！他的蓝牙名称叫<code>BLE GAMEPAD</code>，在开启这个模式时，长按摇杆键就能退出这个模式。</li>
+<li><code>Screen Cast</code>：这是一个桌面投屏软件<del>电脑通过连接这台小掌机的WiFi即可把桌面内容投屏到掌机的屏幕上面哦</del>但是这个功能会和Nofrendo产生冲突，需要在编译期间确定二者中的一个。</li>
+<li><code>Raylib Games</code>：这里内置了一些非常简单不怎么占用这个芯片内存的游戏！主要还是用来打发时间用的啦！</li>
+<li><code>Music</code>：它会读取SD卡的Music文件夹中json文件，并播放一段音乐！我在里面内置了Nokia的铃声，如果你有其他想播放的音乐，可以通过这个工具生成音乐的Json文件进行播放~</li>
+<li><code>Genshin</code>：原神，这个不多解释。这个原神会卡半岩加载，很还原的！</li>
+</ul>
+<h2 id="进阶玩法"><a href="#进阶玩法" class="headerlink" title="进阶玩法"></a>进阶玩法</h2><p>如果你不满足于现在的功能，那么轮到发挥你的想象力的时候咯！当前烧录在单片机里面的固件代码，可以在<a target="_blank" rel="noopener" href="https://github.com/Dafeigy/Rachel.git">这里</a>找到源码，里面也提供了一个详细的教你如何构建一个应用的教程。如果你是第一次接触嵌入式开发的话，那么你需要在 VSCode 中下载 PlatformIO 这个插件来设置开发环境，如果你不知道怎么做的话，可以参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/Lovely_him/article/details/149651623">这篇文章</a>。那么在这个迷你掌机里，你可以进行二次开发的相关外设接口包括这些：</p>
+<ul>
+<li><code>蓝牙</code>：你可以使用蓝牙相关的模块进行蓝牙通信应用的构建。</li>
+<li><code>WiFi</code>：你可以构建基于WiFi的应用，实现局域网内的一些通信功能。</li>
+<li><code>陀螺仪</code>：内置了一个BMI270的六轴陀螺仪传感器，你可以基于它做一些姿态感知相关的应用开发。</li>
+<li><code>蜂鸣器</code>：可以使用它构建一些播放声音的应用。</li>
+<li><code>屏幕</code>：内置了一块1.3寸的TFT IPS彩色屏幕，你可以用它来展示应用的GUI界面，或者构造一些其他的应用。</li>
+</ul>
+<p>希望你可以玩得开心！</p>
 
                 
               </div>
@@ -319,38 +307,6 @@
             <div>
               <div class="post-metas my-3">
   
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
-      
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/LLM/" class="category-chain-item">LLM</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-    </div>
-  
-  
-    <div class="post-meta">
-      <i class="iconfont icon-tags"></i>
-      
-        <a href="/tags/LLM/" class="print-no-link">#LLM</a>
-      
-        <a href="/tags/Transformer/" class="print-no-link">#Transformer</a>
-      
-        <a href="/tags/%E4%BC%98%E5%8C%96/" class="print-no-link">#优化</a>
-      
-    </div>
   
 </div>
 
@@ -361,12 +317,6 @@
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
-                    
-                      <a href="/transformer-9682692f6aa3/" title="Transformer杂记">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Transformer杂记</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
                     
                   </article>
                   <article class="post-next col-6">
